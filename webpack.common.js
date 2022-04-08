@@ -15,16 +15,17 @@ const config = {
 		rules: [
 			{
 				test: /\.js$/,
+				type: "javascript/auto",
 				exclude: [/node_modules/],
 				use: [
 					{
 						loader: "babel-loader",
 					},
 				],
-				type: "javascript/auto",
 			},
 			{
 				test: /\.css$/,
+				type: "javascript/auto",
 				use: [
 					{
 						loader: "style-loader",
@@ -33,23 +34,14 @@ const config = {
 						loader: "css-loader",
 					},
 				],
-				type: "javascript/auto",
 			},
 			{
-				test: /\.svg$/,
-				loader: "svg-inline-loader",
-				type: "javascript/auto",
-			},
-			{
-				test: /\.(ttf|eot|woff)$/,
-				use: {
-					loader: "file-loader",
-					options: {
-						name: "assets/fonts/[name].[ext]",
-						publicPath: `${process.env.projectpath}/build/`,
-					},
-				},
-				type: "javascript/auto",
+				test: /\.(ttf|eot|woff|svg)$/,
+				type: "asset/resource",
+				generator: {
+					publicPath: `${process.env.projectpath}/build/`,
+					filename: "assets/fonts/[name][ext]",
+				}
 			},
 		],
 	},
