@@ -14,47 +14,14 @@ const config = {
 	module: {
 		rules: [
 			{
-				oneOf: [
+				test: /\.js$/,
+				exclude: [/node_modules/],
+				use: [
 					{
-						test: /\.(js|jsx)$/,
-						exclude: [/node_modules/, /\.test.js$/, /__mocks__/],
-						use: [
-							{
-								loader: "babel-loader",
-							},
-						],
-					},
-					{
-						test: /\.(js|mjs)$/,
-						use: [
-							{
-								loader: "babel-loader",
-								options: {
-									babelrc: false,
-									configFile: false,
-									compact: false,
-									presets: [
-										[require.resolve("babel-preset-react-app/dependencies"), { helpers: true }],
-									],
-									cacheDirectory: true,
-									cacheCompression: false,
-									sourceMaps: true,
-									inputSourceMap: true,
-								},
-							},
-						],
+						loader: "babel-loader",
 					},
 				],
-			},
-			{
-				test: /\.(png|jpg|gif)$/,
-				use: {
-					loader: "file-loader",
-					options: {
-						name: "assets/images/[name].[ext]",
-						publicPath: "/build/",
-					},
-				},
+				type: "javascript/auto",
 			},
 			{
 				test: /\.css$/,
@@ -66,27 +33,15 @@ const config = {
 						loader: "css-loader",
 					},
 				],
-			},
-			{
-				test: /\.(scss|sass)$/,
-				use: [
-					{
-						loader: "style-loader",
-					},
-					{
-						loader: "css-loader",
-					},
-					{
-						loader: "sass-loader",
-					},
-				],
+				type: "javascript/auto",
 			},
 			{
 				test: /\.svg$/,
 				loader: "svg-inline-loader",
+				type: "javascript/auto",
 			},
 			{
-				test: /\.(ttf|eot|woff|woff2)$/,
+				test: /\.(ttf|eot|woff)$/,
 				use: {
 					loader: "file-loader",
 					options: {
@@ -94,12 +49,12 @@ const config = {
 						publicPath: `${process.env.projectpath}/build/`,
 					},
 				},
+				type: "javascript/auto",
 			},
 		],
 	},
 	resolve: {
-		extensions: [".js", ".jsx"],
-		alias: {},
+		extensions: [".js"],
 	},
 };
 
